@@ -2,6 +2,8 @@
 import apa102
 import time
 import threading
+import signal
+import sys
 from gpiozero import LED
 try:
     import queue as Queue
@@ -73,7 +75,18 @@ class Pixels:
 pixels = Pixels()
 
 
+def handler_stop_signals(_signo, _stack_frame):
+    # Raises SystemExit(0):
+    pixels.off()
+    time.sleep(3)
+    sys.exit(0)
+
+
+
 if __name__ == '__main__':
+    signal.signal(signal.SIGINT, handler_stop_signals)
+    signal.signal(signal.SIGTERM, handler_stop_signals)
+
     while True:
 
         try:
