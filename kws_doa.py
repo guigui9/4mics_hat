@@ -16,12 +16,12 @@ from pixels import pixels
 
 def main():
     src = Source(rate=16000, channels=4, frames_size=320)
-    ch1 = ChannelPicker(channels=4, pick=1)
-    kws = KWS()
+    ch0 = ChannelPicker(channels=4, pick=0)
+    kws = KWS(model='snowboy', sensitivity=0.6, verbose=True)
     doa = DOA(rate=16000)
 
-    src.link(ch1)
-    ch1.link(kws)
+    src.link(ch0)
+    ch0.link(kws)
     src.link(doa)
 
     def on_detected(keyword):
